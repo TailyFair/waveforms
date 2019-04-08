@@ -1,7 +1,12 @@
 [package]
 name = "waveforms"
 version = "0.1.0"
+description = "Simple waveforms oscillators"
 authors = ["TailyFair <Karolis.Kalzanauskas@stud.vgtu.lt>"]
 edition = "2018"
 
 [dependencies]
+rand = "0.6"
+
+[dev-dependencies]
+hound = "3.4.0"
