@@ -5,7 +5,7 @@ Simple audio synthesis waveforms
 Sine, square, sawtooth, noise
 
 ### Usage
-```
+```rust
 extern crate waveforms;
 
 use waveforms::{Oscillator, Waveform};
