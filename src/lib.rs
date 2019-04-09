@@ -13,6 +13,7 @@ pub struct Oscillator {
     frequency: f64,
     sample_rate: f64,
     phase: f64,
+    phase_step: f64,
 }
 
 impl Oscillator {
@@ -22,15 +23,26 @@ impl Oscillator {
             frequency: frequency,
             sample_rate: sample_rate,
             phase: 0.0,
+            phase_step: frequency / sample_rate,
         }
     }
 
     pub fn set_frequency(&mut self, frequency: f64) {
         self.frequency = frequency;
+        self.calc_phase_step();
+    }
+
+    pub fn get_frequency(&self) -> f64 {
+        self.frequency
     }
 
     pub fn set_sample_rate(&mut self, frequency: f64) {
         self.sample_rate = frequency;
+        self.calc_phase_step();
+    }
+
+    pub fn get_sample_rate(&self) -> f64 {
+        self.sample_rate
     }
 
     pub fn get_amplitude(&mut self) -> f64 {
@@ -41,9 +53,13 @@ impl Oscillator {
             Waveform::Noise => noise_sample(&self),
         };
 
-        self.phase = (self.phase + self.frequency / self.sample_rate).fract();
+        self.phase = (self.phase + self.phase_step).fract();
 
         output
+    }
+
+    fn calc_phase_step(&mut self) {
+        self.phase_step = self.frequency / self.sample_rate;
     }
 }
 
