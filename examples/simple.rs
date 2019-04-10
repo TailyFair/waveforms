@@ -2,7 +2,8 @@ extern crate hound;
 extern crate waveforms;
 
 use std::i16;
-use waveforms::{Oscillator, Waveform};
+
+use waveforms::Waveform;
 
 fn main() {
     let spec = hound::WavSpec {
@@ -13,10 +14,10 @@ fn main() {
     };
     let mut writer = hound::WavWriter::create("example.wav", spec).unwrap();
 
-    let mut osc = Oscillator::new(Waveform::Sine, 440.0, 44100.0);
+    let mut sine = waveforms::Sine::new(440.0, 44100.0);
 
-    for _t in (0..44100 / 24).map(|x| x as f32 / 44100.0) {
-        let sample = osc.get_amplitude() as f32;
+    for _t in (0..44100).map(|x| x as f32 / 44100.0) {
+        let sample = sine.process() as f32;
         let amplitude = (i16::MAX / 2) as f32;
         writer.write_sample((sample * amplitude) as i16).unwrap();
     }
